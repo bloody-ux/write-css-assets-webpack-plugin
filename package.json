@@ -1,0 +1,21 @@
+{
+  "name": "write-css-assets-webpack-plugin",
+  "version": "1.0.0",
+  "description": "output css assets/chunk mapping to manifest file",
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bloody-ux/write-css-assets-webpack-plugin.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "nada",
+  "license": "MIT",
+  "dependencies": {
+    "webpack-sources": "^1.1.0"
+  }
+}
