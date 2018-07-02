@@ -15,16 +15,24 @@ function createCssHash({
   }, {});
 }
 
+const defaultOptions = {
+  assetName: 'main.js',
+}
+
 class WriteCssAssetsWebpackPlugin {
+  constructor(options) {
+    this.options = Object.assign({}, defaultOptions, options);
+  }
+
 	apply(compiler) {
     compiler.plugin('emit', (compilation, callback) => {
-      const manifest = compilation.assets['manifest.js'];
+      const asset = compilation.assets[this.options.assetName];
 
-      if (manifest) {
+      if (asset) {
         const stats = compilation.getStats().toJson();
         const cssHash = createCssHash(stats);
         const hashString = `window.__CSS_CHUNKS__= ${JSON.stringify(cssHash)};`;
-        compilation.assets['manifest.js'] = new ConcatSource(hashString, '\n', manifest);
+        compilation.assets[this.options.assetName] = new ConcatSource(hashString, '\n', asset);
       }
       
       callback();

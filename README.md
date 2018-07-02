@@ -1,6 +1,6 @@
 ## 这个plugin的作用
 
-用于将webpack stats中的关于css的chunk/assets的映射关系输出到`manifest.js`文件的头部:
+用于将webpack stats中的关于css的chunk/assets的映射关系输出到`main.js`（默认）文件的头部:
 
 ``` javascript
 
@@ -20,4 +20,11 @@ plugins: [
 ]
 ```
 
-目前这个插件做得很简单，没有参数可以控制行为
+
+## 选项
+
+``` javascript
+options: {
+  assetName: string, // 默认值是main.js
+}
+```
