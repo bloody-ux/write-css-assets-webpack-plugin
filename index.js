@@ -25,19 +25,21 @@ class WriteCssAssetsWebpackPlugin {
   }
 
 	apply(compiler) {
-    compiler.plugin('emit', (compilation, callback) => {
-      const asset = compilation.assets[this.options.assetName];
+    compiler.plugin('compilation', (compilation, callback) => {
+      compilation.plugin('optimize-chunk-assets', (chunks, callback) => {
+        const asset = compilation.assets[this.options.assetName];
 
-      if (asset) {
-        const stats = compilation.getStats().toJson();
-        const cssHash = createCssHash(stats);
-        const hashString = `window.__CSS_CHUNKS__= ${JSON.stringify(cssHash)};`;
-        compilation.assets[this.options.assetName] = new ConcatSource(hashString, '\n', asset);
-      }
-      
-      callback();
+        if (asset) {
+          const stats = compilation.getStats().toJson();
+          const cssHash = createCssHash(stats);
+          const hashString = `window.__CSS_CHUNKS__= ${JSON.stringify(cssHash)};`;
+          compilation.assets[this.options.assetName] = new ConcatSource(hashString, '\n', asset);
+        }
+ 
+        callback();
+      });
     });
-	}
+  }
 }
 
 module.exports = WriteCssAssetsWebpackPlugin;
