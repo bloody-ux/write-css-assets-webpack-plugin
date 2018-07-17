@@ -24,7 +24,7 @@ class WriteCssAssetsWebpackPlugin {
     this.options = Object.assign({}, defaultOptions, options);
   }
 
-  optimizeChunkAssets(chunks, callback) {
+  optimizeChunkAssets(compilation, chunks, callback) {
     const asset = compilation.assets[this.options.assetName];
 
     if (asset) {
@@ -42,13 +42,13 @@ class WriteCssAssetsWebpackPlugin {
     if(compiler.hooks) {
       compiler.hooks.compilation.tap('WriteCssAssetsWebpackPlugin', compilation => {
         compiler.hooks.optimizeChunkAssets.tap('WriteCssAssetsWebpackPlugin', chunks => {
-          this.optimizeChunkAssets(chunks, () => {});
+          this.optimizeChunkAssets(compilation, chunks, () => {});
         });
       });
     } else {
       compiler.plugin('compilation', (compilation) => {
         compilation.plugin('optimize-chunk-assets', (chunks, callback) => {
-          this.optimizeChunkAssets(chunks, callback);
+          this.optimizeChunkAssets(compilation, chunks, callback);
         });
       });
     }
