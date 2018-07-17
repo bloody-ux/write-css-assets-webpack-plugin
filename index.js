@@ -24,21 +24,34 @@ class WriteCssAssetsWebpackPlugin {
     this.options = Object.assign({}, defaultOptions, options);
   }
 
-	apply(compiler) {
-    compiler.plugin('compilation', (compilation, callback) => {
-      compilation.plugin('optimize-chunk-assets', (chunks, callback) => {
-        const asset = compilation.assets[this.options.assetName];
+  optimizeChunkAssets(chunks, callback) {
+    const asset = compilation.assets[this.options.assetName];
 
-        if (asset) {
-          const stats = compilation.getStats().toJson();
-          const cssHash = createCssHash(stats);
-          const hashString = `window.__CSS_CHUNKS__= ${JSON.stringify(cssHash)};`;
-          compilation.assets[this.options.assetName] = new ConcatSource(hashString, '\n', asset);
-        }
- 
-        callback();
+    if (asset) {
+      const stats = compilation.getStats().toJson();
+      const cssHash = createCssHash(stats);
+      const hashString = `window.__CSS_CHUNKS__= ${JSON.stringify(cssHash)};`;
+      compilation.assets[this.options.assetName] = new ConcatSource(hashString, '\n', asset);
+    }
+
+    callback();
+  }
+
+	apply(compiler) {
+    // webpack 4
+    if(compiler.hooks) {
+      compiler.hooks.compilation.tap('WriteCssAssetsWebpackPlugin', compilation => {
+        compiler.hooks.optimizeChunkAssets.tap('WriteCssAssetsWebpackPlugin', chunks => {
+          this.optimizeChunkAssets(chunks, () => {});
+        });
       });
-    });
+    } else {
+      compiler.plugin('compilation', (compilation) => {
+        compilation.plugin('optimize-chunk-assets', (chunks, callback) => {
+          this.optimizeChunkAssets(chunks, callback);
+        });
+      });
+    }
   }
 }
 

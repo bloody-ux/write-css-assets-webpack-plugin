@@ -1,6 +1,6 @@
 {
   "name": "write-css-assets-webpack-plugin",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "output css assets/chunk mapping to manifest file",
   "main": "index.js",
   "files": [
@@ -17,5 +17,8 @@
   "license": "MIT",
   "dependencies": {
     "webpack-sources": "^1.1.0"
+  },
+  "peerDependencies": {
+    "webpack": "4.x || 3.x || 2.x"
   }
 }
