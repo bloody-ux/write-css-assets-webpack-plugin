@@ -1,4 +1,4 @@
-## 这个plugin的作用
+## 这个插件的作用
 
 用于将webpack stats中的关于css的chunk/assets的映射关系输出到`main.js`（默认）文件的头部:
 

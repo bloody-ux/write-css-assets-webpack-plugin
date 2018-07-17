@@ -10,6 +10,13 @@
     "type": "git",
     "url": "https://github.com/bloody-ux/write-css-assets-webpack-plugin.git"
   },
+  "keywords": [
+    "lazing loading css",
+    "inlined css chunks",
+    "extract-css-chunks-webpack-plugin",
+    "react-universal-component",
+    "babel-plugin-universal-import"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
