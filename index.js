@@ -41,7 +41,7 @@ class WriteCssAssetsWebpackPlugin {
     // webpack 4
     if(compiler.hooks) {
       compiler.hooks.compilation.tap('WriteCssAssetsWebpackPlugin', compilation => {
-        compiler.hooks.optimizeChunkAssets.tap('WriteCssAssetsWebpackPlugin', chunks => {
+        compilation.hooks.optimizeChunkAssets.tap('WriteCssAssetsWebpackPlugin', chunks => {
           this.optimizeChunkAssets(compilation, chunks, () => {});
         });
       });
